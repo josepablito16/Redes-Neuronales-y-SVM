@@ -12,6 +12,7 @@ library(RWeka)
 library(neural)
 library(dummy)
 library(neuralnet)
+library(e1071)
 
 # Leer datos del csv
 data <- read.csv("./Data/train.csv", stringsAsFactors = FALSE)
@@ -78,13 +79,31 @@ end_time - start_time
 #-------------------------------
 #SVM1
 #-------------------------------
-
-modeloSVM_L<-svm(grupoRespuesta~., data=train[,varNames], cost=0.9, kernel="linear") #98%
+modeloSVM_L<-svm(grupoRespuesta~., data=train[,varNames], degree=9, kernel="polynomial") #98%
 prediccionL<-predict(modeloSVM_L,newdata=test[,TestvarNames])
-confusionMatrix(as.factor(prediccionL),test$grupoRespuesta)
+
+testcompleto<-test[,TestvarNames]
+testcompleto$pred<-trunc(prediccionL)
+testcompleto$pred1<-ifelse(testcompleto$pred <= 1, 1,ifelse( testcompleto$pred >=1.1 & testcompleto$pred <= 2.5 , 2 ,ifelse( testcompleto$pred >=2.6, 3,"hola"  ) ) )
+str(as.factor(testcompleto$pred1))
+str(as.factor(test$grupoRespuesta))
+
+
+confusionMatrix(as.factor(testcompleto$pred1),as.factor(test$grupoRespuesta))
+
 #-------------------------------
 #SVM2
 #-------------------------------
-modeloSVM_L<-svm(grupoRespuesta~., data=train[,varNames], gamma=2^1, kernel="radial") #98%
+modeloSVM_L<-svm(grupoRespuesta~., data=train[,varNames], gamma=3^6, kernel="radial") #98%
 prediccionL<-predict(modeloSVM_L,newdata=test[,TestvarNames])
-confusionMatrix(as.factor(prediccionL),test$grupoRespuesta)
+
+testcompleto<-test[,TestvarNames]
+testcompleto$pred<-trunc(prediccionL)
+testcompleto$pred2<-ifelse(testcompleto$pred <= 1, 1,ifelse( testcompleto$pred >=1.1 & testcompleto$pred <= 2.5 , 2 ,ifelse( testcompleto$pred >=2.6, 3,"hola"  ) ) )
+str(as.factor(testcompleto$pred2))
+str(as.factor(test$grupoRespuesta))
+
+
+confusionMatrix(as.factor(testcompleto$pred2),as.factor(test$grupoRespuesta))
+
+
