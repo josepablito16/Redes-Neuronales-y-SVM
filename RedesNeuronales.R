@@ -75,5 +75,16 @@ cfmNeuralNet<-confusionMatrix(as.factor(test$predNeuralNet),as.factor(test$y))
 cfmNeuralNet
 end_time <- Sys.time()
 end_time - start_time
+#-------------------------------
+#SVM1
+#-------------------------------
 
-
+modeloSVM_L<-svm(grupoRespuesta~., data=train[,varNames], cost=0.9, kernel="linear") #98%
+prediccionL<-predict(modeloSVM_L,newdata=test[,TestvarNames])
+confusionMatrix(as.factor(prediccionL),test$grupoRespuesta)
+#-------------------------------
+#SVM2
+#-------------------------------
+modeloSVM_L<-svm(grupoRespuesta~., data=train[,varNames], gamma=2^1, kernel="radial") #98%
+prediccionL<-predict(modeloSVM_L,newdata=test[,TestvarNames])
+confusionMatrix(as.factor(prediccionL),test$grupoRespuesta)
