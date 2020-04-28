@@ -77,33 +77,82 @@ cfmNeuralNet
 end_time <- Sys.time()
 end_time - start_time
 #-------------------------------
-#SVM1
+#SVM: Polinomial 1
+#Grado:9
+#kernel:Polynomial
 #-------------------------------
 modeloSVM_L<-svm(grupoRespuesta~., data=train[,varNames], degree=9, kernel="polynomial") #98%
 prediccionL<-predict(modeloSVM_L,newdata=test[,TestvarNames])
-
 testcompleto<-test[,TestvarNames]
 testcompleto$pred<-trunc(prediccionL)
 testcompleto$pred1<-ifelse(testcompleto$pred <= 1, 1,ifelse( testcompleto$pred >=1.1 & testcompleto$pred <= 2.5 , 2 ,ifelse( testcompleto$pred >=2.6, 3,"hola"  ) ) )
 str(as.factor(testcompleto$pred1))
 str(as.factor(test$grupoRespuesta))
-
-
 confusionMatrix(as.factor(testcompleto$pred1),as.factor(test$grupoRespuesta))
-
 #-------------------------------
-#SVM2
+#SVM: Polinomial 2
+#Grado:4
+#kernel:Polynomial
+#-------------------------------
+modeloSVM_L<-svm(grupoRespuesta~., data=train[,varNames], degree=4, kernel="polynomial") #98%
+prediccionL<-predict(modeloSVM_L,newdata=test[,TestvarNames])
+testcompleto<-test[,TestvarNames]
+testcompleto$pred<-trunc(prediccionL)
+testcompleto$pred1<-ifelse(testcompleto$pred <= 1, 1,ifelse( testcompleto$pred >=1.1 & testcompleto$pred <= 2.5 , 2 ,ifelse( testcompleto$pred >=2.6, 3,"hola"  ) ) )
+str(as.factor(testcompleto$pred1))
+str(as.factor(test$grupoRespuesta))
+confusionMatrix(as.factor(testcompleto$pred1),as.factor(test$grupoRespuesta))
+#-------------------------------
+#SVM: Radial 1
+#Gamma:3^6
+#kernel:Radial
 #-------------------------------
 modeloSVM_L<-svm(grupoRespuesta~., data=train[,varNames], gamma=3^6, kernel="radial") #98%
 prediccionL<-predict(modeloSVM_L,newdata=test[,TestvarNames])
-
 testcompleto<-test[,TestvarNames]
 testcompleto$pred<-trunc(prediccionL)
 testcompleto$pred2<-ifelse(testcompleto$pred <= 1, 1,ifelse( testcompleto$pred >=1.1 & testcompleto$pred <= 2.5 , 2 ,ifelse( testcompleto$pred >=2.6, 3,"hola"  ) ) )
 str(as.factor(testcompleto$pred2))
 str(as.factor(test$grupoRespuesta))
-
-
 confusionMatrix(as.factor(testcompleto$pred2),as.factor(test$grupoRespuesta))
-
-
+#-------------------------------
+#SVM: Radial 2
+#Gamma:5^6
+#kernel:Radial
+#-------------------------------
+modeloSVM_L<-svm(grupoRespuesta~., data=train[,varNames], gamma=5^6, kernel="radial") #98%
+prediccionL<-predict(modeloSVM_L,newdata=test[,TestvarNames])
+testcompleto<-test[,TestvarNames]
+testcompleto$pred<-trunc(prediccionL)
+testcompleto$pred2<-ifelse(testcompleto$pred <= 1, 1,ifelse( testcompleto$pred >=1.1 & testcompleto$pred <= 2.5 , 2 ,ifelse( testcompleto$pred >=2.6, 3,"hola"  ) ) )
+str(as.factor(testcompleto$pred2))
+str(as.factor(test$grupoRespuesta))
+confusionMatrix(as.factor(testcompleto$pred2),as.factor(test$grupoRespuesta))
+#-------------------------------
+#SVM: Linear 1
+#Costo:10
+#Gamma:3
+#kernel:Linear
+#-------------------------------
+modeloSVM_L<-svm(grupoRespuesta~., data=train[,varNames], cost=10, gamma=3, kernel="linear")
+prediccionL<-predict(modeloSVM_L,newdata=test[,TestvarNames])
+testcompleto<-test[,TestvarNames]
+testcompleto$pred<-ceiling(prediccionL)
+testcompleto$pred2<-ifelse(testcompleto$pred <= 1, 1,ifelse( testcompleto$pred >=1.1 & testcompleto$pred <= 2.5 , 2 ,ifelse( testcompleto$pred >=2.6, 3,"hola"  ) ) )
+str(as.factor(testcompleto$pred2))
+str(as.factor(test$grupoRespuesta))
+confusionMatrix(as.factor(testcompleto$pred2),as.factor(test$grupoRespuesta))
+#-------------------------------
+#SVM: Linear 2
+#Costo:17
+#Gamma:6
+#kernel:Linear
+#-------------------------------
+modeloSVM_L<-svm(grupoRespuesta~., data=train[,varNames], cost=17, gamma=6, kernel="linear")
+prediccionL<-predict(modeloSVM_L,newdata=test[,TestvarNames])
+testcompleto<-test[,TestvarNames]
+testcompleto$pred<-ceiling(prediccionL)
+testcompleto$pred2<-ifelse(testcompleto$pred <= 1, 1,ifelse( testcompleto$pred >=1.1 & testcompleto$pred <= 2.5 , 2 ,ifelse( testcompleto$pred >=2.6, 3,"hola"  ) ) )
+str(as.factor(testcompleto$pred2))
+str(as.factor(test$grupoRespuesta))
+confusionMatrix(as.factor(testcompleto$pred2),as.factor(test$grupoRespuesta))
